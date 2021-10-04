@@ -1,0 +1,9 @@
+{
+    "name" : "ExampleMod",
+    "friendlyName" : "EM",
+    "description" : "Awooga",
+    "author" : "<yournamehere>",
+    "version" : "v0.1.0",
+    "includes" : ["examplemod010"],
+    "priority" : 0
+  }

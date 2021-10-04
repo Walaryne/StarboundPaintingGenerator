@@ -1,0 +1,15 @@
+{
+    "input": [
+        {
+            "item": "money",
+            "count": 1
+        }
+    ],
+    "output": {
+        "item": "example",
+        "count": 1
+    },
+    "groups": [
+        "plain"
+    ]
+}
