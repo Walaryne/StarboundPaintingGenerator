@@ -31,6 +31,7 @@ USAGE:
 StarboundPaintingGenerator(.exe) <image directory> <output directory> [<max width> <max height>]
 Max Width defaults to 0
 Max Height defaults to 300
+Setting either (but not both) to 0 tells ImageMagick to fill in based on aspect ratio
 ");
                 Environment.Exit(1);
             }
