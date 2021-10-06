@@ -193,7 +193,7 @@ Setting either (but not both) to 0 tells ImageMagick to fill in based on aspect 
                 {
                     value["item"] = item.itemname;
                 }
-                patch.Add(initialstate);
+                patch.Add(initialstate.DeepClone());
             }
             
             using var writer = new JsonTextWriter(sw) {Formatting = Formatting.Indented};
