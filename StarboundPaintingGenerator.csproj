@@ -14,4 +14,9 @@
         <EmbeddedResource Include="resources/*" />
     </ItemGroup>
 
+    <Target Name="Create7Zip" AfterTargets="Publish" Condition=" '$(OS)' == 'Unix' ">
+        <Exec Command="echo --- Create 7Zip ---" />
+        <Exec Command="cd $(PublishDir); ./package.sh" />
+    </Target>
+
 </Project>
