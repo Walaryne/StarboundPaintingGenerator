@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 namespace StarboundPaintingGenerator
@@ -10,6 +11,13 @@ namespace StarboundPaintingGenerator
     {
         private readonly List<Item> items;
         private readonly DirectoryInfo outputdir;
+        private static readonly JavaScriptEncoder encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+        
+        private static readonly JsonWriterOptions writerOptions = new()
+        {
+            Indented = true,
+            Encoder = encoder
+        };
 
         public JsonWriter(List<Item> items, DirectoryInfo outputdir)
         {
@@ -42,11 +50,6 @@ namespace StarboundPaintingGenerator
                 size[0] = item.width;
                 size[1] = item.height;
             }
-
-            var writerOptions = new JsonWriterOptions
-            {
-                Indented = true
-            };
             
             using var writer = new Utf8JsonWriter(sw.BaseStream, writerOptions);
             frames?.WriteTo(writer);
@@ -72,11 +75,6 @@ namespace StarboundPaintingGenerator
                 orientation["image"] = $"{item.itemname}.png:<color>";
             }
 
-            var writerOptions = new JsonWriterOptions
-            {
-                Indented = true
-            };
-
             using var writer = new Utf8JsonWriter(sw.BaseStream, writerOptions);
             obj.WriteTo(writer);
         }
@@ -92,11 +90,6 @@ namespace StarboundPaintingGenerator
                 output["item"] = item.itemname;
             }
 
-            var writerOptions = new JsonWriterOptions
-            {
-                Indented = true
-            };
-            
             using var writer = new Utf8JsonWriter(sw.BaseStream, writerOptions);
             recipe?.WriteTo(writer);
         }
@@ -122,12 +115,7 @@ namespace StarboundPaintingGenerator
                 }
                 spArray?.Add(JsonNode.Parse(entry?.ToJsonString() ?? throw new InvalidOperationException())?.AsArray());
             }
-            
-            var writerOptions = new JsonWriterOptions
-            {
-                Indented = true
-            };
-            
+
             using var writer = new Utf8JsonWriter(sw.BaseStream, writerOptions);
             patch?.WriteTo(writer);
         }
@@ -136,11 +124,6 @@ namespace StarboundPaintingGenerator
         {
             using StreamWriter sw = File.CreateText($"{dir}/_metadata");
             JsonNode metadata = JsonNode.Parse(Util.GetEmbeddedResourceContent("StarboundPaintingGenerator.resources._metadata"));
-            
-            var writerOptions = new JsonWriterOptions
-            {
-                Indented = true
-            };
             
             using var writer = new Utf8JsonWriter(sw.BaseStream, writerOptions);
             metadata?.WriteTo(writer);
